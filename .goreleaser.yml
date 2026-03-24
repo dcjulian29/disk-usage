@@ -1,9 +1,10 @@
-project_name: disk-usage
+---
 version: 2
 before:
   hooks:
     - go mod tidy
     - go mod verify
+    - go vet
 builds:
   - env:
       - CGO_ENABLED=0
@@ -15,7 +16,9 @@ builds:
       - amd64
 
 archives:
-  - builds_info:
+  - files:
+      - LICENSE
+    builds_info:
       group: root
       owner: root
       mode: 0755
@@ -26,7 +29,7 @@ archives:
 
 nfpms:
   - package_name: dcjulian29.apps.disk-usage
-    homepage: https://github.com/dcjulian29/cli-tools/disk-usage/
+    homepage: https://github.com/dcjulian29/disk-usage/
     maintainer: Julian Easterling <julian@julianscorner.com>
     license: Apache 2.0
     description: |-
@@ -39,15 +42,16 @@ nfpms:
 chocolateys:
   - name: dcjulian29.apps.disk-usage
     authors: Julian Easterling <julian@julianscorner.com>
-    project_url: https://github.com/dcjulian29/cli-tools/disk-usage/
-    copyright: 2023 Julian Easterling julian@julianscorner.com
-    license_url: https://github.com/dcjulian29/cli-tools/blob/main/LICENSE
+    project_url: https://github.com/dcjulian29/disk-usage/
+    copyright: 2026 Julian Easterling julian@julianscorner.com
+    license_url: https://github.com/dcjulian29/disk-usage/blob/main/LICENSE
     require_license_acceptance: false
     bug_tracker_url: https://github.com/dcjulian29/cli-tools/issues
     description: |
       disk-usage reports back what each directory consumes in space.
-    skip_publish: true
-
+    api_key: "{{ .Env.CHOCO_API_KEY}}"
+    source_repo: "https://www.myget.org/F/dcjulian29-chocolatey/"
+    skip_publish: false
 checksum:
   name_template: 'checksums.txt'
 
