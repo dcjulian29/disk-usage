@@ -91,7 +91,7 @@ func drawBar(value int64, max int64) string {
 func getSize(path string) int64 {
 	var total int64
 
-	err := filepath.WalkDir(path, func(_ string, d fs.DirEntry, err error) error {
+	_ = filepath.WalkDir(path, func(_ string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return nil // Ignore permission denied or other errors
 		}
@@ -105,10 +105,6 @@ func getSize(path string) int64 {
 
 		return nil
 	})
-
-	if err != nil {
-		// Fail silently
-	}
 
 	return total
 }
